@@ -8,11 +8,11 @@ import java.util.Scanner;
 public class FileManager {
 
     // Konstanta path file untuk data Menu
-    private static final String FILE_MENU = "dummyUASLabPBOB_3/menu.txt";
+    private static final String FILE_MENU = "UASLabPBOB_3/menu.txt";
     // Konstanta path file untuk data Pegawai
-    private static final String FILE_PEGAWAI = "dummyUASLabPBOB_3/pegawai.txt";
+    private static final String FILE_PEGAWAI = "UASLabPBOB_3/pegawai.txt";
     // Konstanta path file untuk data Customer
-    private static final String FILE_CUSTOMER = "dummyUASLabPBOB_3/customer.txt";
+    private static final String FILE_CUSTOMER = "UASLabPBOB_3/customer.txt";
 
     // Memuat (load) daftar menu dari FILE_MENU
     public static ArrayList<MenuItem> loadMenu() {
