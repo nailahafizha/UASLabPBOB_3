@@ -1,0 +1,130 @@
+package UASLabPBOB_3;
+
+import java.awt.*;
+
+public class CustomerLoginRegisterPanel extends Panel {
+    
+    private final AppFrame app;
+    private Label lblStatus;
+
+    public CustomerLoginRegisterPanel(AppFrame app) {
+        this.app = app;
+        setLayout(new BorderLayout());
+        setBackground(AppFrame.RED_DARK);
+
+        //header
+        Label header = new Label("Selamat Datang Pelanggan", Label.CENTER);
+        header.setFont(new Font("Serif", Font.BOLD, 32));
+        header.setForeground(AppFrame.GOLD);
+        header.setPreferredSize(new Dimension(1000, 80));
+        add(header, BorderLayout.NORTH);
+
+        Panel center = new Panel(new GridLayout(1, 2, 20, 0)); // 1 Baris, 2 Kolom, Jarak 20px
+        center.setBackground(AppFrame.RED_DARK);
+        
+        Panel wrapper = new Panel(new BorderLayout());
+        wrapper.setBackground(AppFrame.RED_DARK);
+        Panel paddingBox = new Panel(new GridLayout(1, 2, 40, 0)) {
+            public Insets getInsets() {
+                return new Insets(20, 40, 20, 40);
+            }
+            
+        };
+
+        paddingBox.setBackground(AppFrame.RED_DARK);
+
+        paddingBox.add(buildLoginBox());
+        paddingBox.add(buildRegisterBox());
+
+        wrapper.add(paddingBox, BorderLayout.CENTER);
+        add(wrapper, BorderLayout.CENTER);
+
+        Panel footer = new Panel(new BorderLayout());
+        footer.setBackground(AppFrame.RED_DARK);
+        footer.setPreferredSize(new Dimension(1000, 60));
+        
+        lblStatus = new Label("Silakan Login atau Daftar akun baru", Label.CENTER);
+        lblStatus.setForeground(Color.white);
+        lblStatus.setFont(new Font("SansSerif", Font.ITALIC, 14));
+        
+        Button btnBack = new Button("Kembali ke Beranda");
+        styleButton(btnBack, false); 
+        btnBack.addActionListener(e -> app.showPage("HOME"));
+        
+        Panel btnBox = new Panel(new FlowLayout());
+        btnBox.setBackground(AppFrame.RED_DARK);
+        btnBox.add(btnBack);
+
+        footer.add(lblStatus, BorderLayout.CENTER);
+        footer.add(btnBox, BorderLayout.SOUTH);
+        
+        add(footer, BorderLayout.SOUTH);
+    }
+
+    // box login
+    private Panel buildLoginBox() {
+        Panel p = new Panel(new GridBagLayout());
+        p.setBackground(Color.white); 
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0; gbc.gridy = 0;
+
+        Label title = new Label("LOGIN", Label.CENTER);
+        title.setFont(new Font("SansSerif", Font.BOLD, 20));
+        title.setForeground(AppFrame.RED_DARK);
+        gbc.gridwidth = 2;
+        p.add(title, gbc);
+
+        gbc.gridy++;
+        Label sub = new Label("Sudah punya akun? Masuk di sini.", Label.CENTER);
+        sub.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        p.add(sub, gbc);
+
+        gbc.gridy++; gbc.gridwidth = 1;
+        p.add(new Label("ID Customer:"), gbc);
+        
+        gbc.gridx = 1;
+        TextField tfId = new TextField(15);
+        p.add(tfId, gbc);
+
+        gbc.gridx = 0; gbc.gridy++;
+        p.add(new Label("Password:"), gbc);
+        
+        gbc.gridx = 1;
+        TextField tfPass = new TextField(15);
+        tfPass.setEchoChar('*');
+        p.add(tfPass, gbc);
+
+        gbc.gridx = 0; gbc.gridy++; gbc.gridwidth = 2;
+        gbc.insets = new Insets(20, 5, 5, 5); 
+        Button btnLogin = new Button("MASUK");
+        styleButton(btnLogin, true); 
+        p.add(btnLogin, gbc);
+
+        //logic login
+        btnLogin.addActionListener(e -> {
+            try {
+                int id = Integer.parseInt(tfId.getText().trim());
+                String pass = tfPass.getText().trim();
+                
+                Akun akun = app.getSystem().login(id, pass);
+                
+                if (akun instanceof Customer) {
+                    app.setCurrentCustomer((Customer) akun);
+                    lblStatus.setText("Login Berhasil!");
+                    tfId.setText(""); tfPass.setText(""); // Reset form
+                    app.showPage("CUSTOMER");
+                } else {
+                    lblStatus.setText("Gagal: ID atau Password salah.");
+                }
+            } catch (NumberFormatException ex) {
+                lblStatus.setText("Error: ID harus berupa angka!");
+            } catch (Exception ex) {
+                lblStatus.setText("Error: " + ex.getMessage());
+            }
+        });
+
+        return p;
+    }
