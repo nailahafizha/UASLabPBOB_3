@@ -1,4 +1,4 @@
-# 🍽️ Sistem Manajemen Restoran (Java GUI)
+# 🍽️ Sistem Manajemen Restoran Xing Fu (Java GUI)
 
 Sistem manajemen restoran berbasis **Graphics User Interface (GUI)** yang dibangun menggunakan bahasa **Java**. 
 
