@@ -61,6 +61,7 @@ public class EmployeeLoginPanel extends Panel {
                 msg.setText("Error: " + ex.getMessage());
             }
         });
+        
 
         btnBack.addActionListener(e -> app.showPage("HOME"));
 
@@ -91,6 +92,7 @@ public class EmployeeLoginPanel extends Panel {
         l.setFont(new Font("SansSerif", Font.PLAIN, 16));
         return l;
     }
+    
     private void style(Button b){
         b.setBackground(AppFrame.RED);
         b.setForeground(AppFrame.WHITE);
