@@ -785,3 +785,5 @@ public class CustomerPanel extends Panel {
         return info.substring(open + 9, end).trim();
     }
 }
+
+
