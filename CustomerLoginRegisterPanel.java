@@ -128,3 +128,112 @@ public class CustomerLoginRegisterPanel extends Panel {
 
         return p;
     }
+
+// box register
+    private Panel buildRegisterBox() {
+        Panel p = new Panel(new GridBagLayout());
+        p.setBackground(new Color(255, 250, 240)); // Warna agak krem dikit beda
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0; gbc.gridy = 0;
+
+        Label title = new Label("DAFTAR BARU", Label.CENTER);
+        title.setFont(new Font("SansSerif", Font.BOLD, 20));
+        title.setForeground(AppFrame.RED_DARK);
+        gbc.gridwidth = 2;
+        p.add(title, gbc);
+
+
+        gbc.gridy++;
+        Label sub = new Label("Belum punya akun? Buat sekarang.", Label.CENTER);
+        sub.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        p.add(sub, gbc);
+
+        //input nama
+        gbc.gridy++; gbc.gridwidth = 1;
+        p.add(new Label("Nama Kamu:"), gbc);
+        
+        gbc.gridx = 1;
+        TextField tfNama = new TextField(15);
+        p.add(tfNama, gbc);
+
+        // Input Pass
+        gbc.gridx = 0; gbc.gridy++;
+        p.add(new Label("Buat Password:"), gbc);
+        
+        gbc.gridx = 1;
+        TextField tfPass = new TextField(15);
+        tfPass.setEchoChar('*'); //sensor password
+        p.add(tfPass, gbc);
+
+        gbc.gridx = 0; gbc.gridy++; gbc.gridwidth = 2;
+        gbc.insets = new Insets(20, 5, 5, 5);
+        Button btnReg = new Button("DAFTAR SEKARANG");
+        styleButton(btnReg, true);
+        p.add(btnReg, gbc);
+
+        //logic register
+        btnReg.addActionListener(e -> {
+            String nama = tfNama.getText().trim();
+            String pass = tfPass.getText().trim();
+
+            if (nama.isEmpty() || pass.isEmpty()) {
+                lblStatus.setText("Nama dan Password tidak boleh kosong!");
+                return;
+            }
+
+            try {
+                Customer c = app.getSystem().registerCustomer(nama, pass);
+                
+                showSuccessDialog("Pendaftaran Berhasil!", 
+                        "Halo " + c.getNama() + "!\n\n" +
+                        "ID Login kamu adalah: " + c.getId() + "\n" +
+                        "Password: " + c.getPassword() + "\n\n" +
+                        "Harap diingat untuk login selanjutnya.");
+                
+                tfNama.setText(""); tfPass.setText(""); //reset form
+                lblStatus.setText("Akun berhasil dibuat. Silakan login di kotak kiri.");
+                
+            } catch (Exception ex) {
+                lblStatus.setText("Gagal daftar: " + ex.getMessage());
+            }
+        });
+
+        return p;
+    }
+
+    // Helper: Styling Button
+    private void styleButton(Button b, boolean primary) {
+        b.setFont(new Font("SansSerif", Font.BOLD, 13));
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        if (primary) {
+            b.setBackground(AppFrame.GOLD);
+            b.setForeground(Color.black);
+        } else {
+            b.setBackground(Color.white);
+            b.setForeground(AppFrame.RED_DARK);
+        }
+    }
+
+    // Helper: Dialog Sukses 
+    private void showSuccessDialog(String title, String msg) {
+        Dialog dlg = new Dialog((Frame)app, title, true);
+        dlg.setSize(350, 250);
+        dlg.setLayout(new BorderLayout());
+        
+        TextArea ta = new TextArea(msg);
+        ta.setEditable(false);
+        ta.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        
+        Button ok = new Button("Saya Mengerti");
+        styleButton(ok, true);
+        ok.addActionListener(e -> { dlg.setVisible(false); dlg.dispose(); });
+        
+        dlg.add(ta, BorderLayout.CENTER);
+        dlg.add(ok, BorderLayout.SOUTH);
+        dlg.setLocationRelativeTo(app);
+        dlg.setVisible(true);
+    }
+}
