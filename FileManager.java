@@ -82,6 +82,7 @@ public class FileManager {
         return daftarCustomer;
     }
 
+    
     // Menyimpan objek Customer 
     public static void saveCustomer(Customer c) {
         try (FileWriter fw = new FileWriter(FILE_CUSTOMER, true); // true = append mode
@@ -92,3 +93,6 @@ public class FileManager {
         }
     }
 }
+
+
+
