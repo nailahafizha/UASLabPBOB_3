@@ -43,3 +43,45 @@ public class Pesanan {
     public int hitungTotal() {
         return hitungSubtotal() + getPajak() + getService();
     }
+
+    public void tampilkanDetail() {
+        System.out.println("---------------------------------");
+        System.out.println("ID Pesanan: " + idPesanan + " | Meja: " + meja.getNomor() + " | Status: " + status);
+        for(DetailPesanan item : daftarItem) {
+            System.out.printf("  - %s (x%d) \t Rp %d\n", item.getItem().getNama(), item.getJumlah(), item.getSubtotal());
+        }
+        System.out.println("---------------------------------");
+        System.out.println("  Subtotal: Rp " + hitungSubtotal());
+        System.out.println("  Pajak (10%): Rp " + getPajak());
+        System.out.println("  Service (5%): Rp " + getService());
+        System.out.println("  TOTAL BAYAR: Rp " + hitungTotal());
+        System.out.println("---------------------------------");
+    }
+
+    public void setMetodePembayaran(String metode) {
+        this.metodePembayaran = metode;
+    }
+    public String getMetodePembayaran() {
+        return this.metodePembayaran;
+    }
+    public int getIdPesanan() { 
+        return idPesanan; 
+    }
+    public String getStatus() {
+         return status; 
+    }
+    public List<DetailPesanan> getDaftarItem() { 
+        return daftarItem; 
+    }
+    public Meja getMeja() { 
+        return meja; 
+    }
+
+    public void setStatus(String status) { 
+        this.status = status; 
+    }
+
+    public Customer getCustomer() { 
+        return this.customer; 
+    }
+}
