@@ -5,7 +5,7 @@ public abstract class Akun {
     private String nama;
     private String password;
 
-    // Konstruktor Akun. Dimana menginisialisasi ID, nama, dan password
+    // constructor akun
     public Akun(int id, String nama, String password) {
         this.id = id;
         this.nama = nama;
