@@ -1,6 +1,6 @@
-# 🍽️ Sistem Manajemen Restoran (Java CLI)
+# 🍽️ Sistem Manajemen Restoran (Java GUI)
 
-Sistem manajemen restoran berbasis **Command Line Interface (CLI)** yang dibangun menggunakan bahasa **Java**. 
+Sistem manajemen restoran berbasis **Graphics User Interface (GUI)** yang dibangun menggunakan bahasa **Java**. 
 
 Proyek ini menerapkan konsep **Object-Oriented Programming (OOP)** seperti *Inheritance*, *Polymorphism*, *Encapsulation*, dan *Abstraction*.
 
